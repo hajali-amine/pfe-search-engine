@@ -1,4 +1,10 @@
 venv
 output
 
+conf
+data
+import
+logs
+plugins
+
 geckodriver.log
