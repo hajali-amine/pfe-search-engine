@@ -63,6 +63,16 @@ class Neo4jOOP:
         query.pop()
         query.append("}) RETURN count(a) AS nodes ")
         return self.driver.session().run("".join(query)).single()["nodes"]
+    def get_node_id(self, type, **kwargs):
+       return  self.match_node(type, **kwargs)[0]["id"]
+    def update_node_by_id(self, type, id, **kwargs):
+        query = [f"Match (a:{type}) WHERE ID(a) = {id} SET "] 
+        for key, value in kwargs.items():
+            query.append("a."+key + "=" + f"'{value}'")
+            query.append(",")
+        query.pop()
+        query.append(" RETURN a")
+        return self.driver.session().run("".join(query)).values()
     def add_relationship(self, types, matchNode1, matchNode2, relationName, **kwargs):
         query = [f"Match (fnode:{types[0]} {{"]
         for matchItem in matchNode1:
@@ -83,4 +93,5 @@ neo = Neo4jOOP("bolt://localhost:7687",  user="neo4j", password="pwd")
 # neo.add_node("Project", projectName="Matching App" , length="3 Months")
 # neo.add_node("Location", country="France")
 # print(neo.add_relationship(["Project", "Location"], [{"key": "projectName", "value":"Matching App"}, {"key": "length", "value":"3 Months"}], [{"key": "country", "value":"France"}] , "IN"))
-    
+franceNode=neo.get_node_id("Location",country="France")
+print( neo.update_node_by_id("Location", franceNode, town="Paris", postalCode="7500"))
