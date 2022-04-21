@@ -34,7 +34,7 @@ class Neo4jOOP:
             parsedResult.append(parsedNode)
         return parsedResult
 
-    def find_by_id(self, type, id):
+    def find_one_by_id(self, type, id):
         query = [f"Match (a:{type}) WHERE ID(a) = {id} RETURN a AS a"]
         result = self.driver.session().run("".join(query)).values()
         return self.parse_match_node(result)[0]
@@ -44,13 +44,16 @@ class Neo4jOOP:
         result = self.driver.session().run("".join(query)).values()
         return result
     
-    def delete_all(self, type, **kwargs):
+    def delete_all_nodes(self, type, **kwargs):
         query = [f"Match (a:{type} {{"]
         for key, value in kwargs.items():
             query.append(key + ":" + f"'{value}'")
             query.append(",")
         query.pop()
         query.append("}) DELETE a")
+        return self.driver.session().run("".join(query)).values()
+    def purge(self):
+        query = ["Match (a) -[r] -> (c) delete a, r, c;"]
         return self.driver.session().run("".join(query)).values()
     def count_node(self, type, **kwargs):
         query = [f"Match (a:{type} {{"]
@@ -60,8 +63,24 @@ class Neo4jOOP:
         query.pop()
         query.append("}) RETURN count(a) AS nodes ")
         return self.driver.session().run("".join(query)).single()["nodes"]
-
+    def add_relationship(self, types, matchNode1, matchNode2, relationName, **kwargs):
+        query = [f"Match (fnode:{types[0]} {{"]
+        for matchItem in matchNode1:
+                query.append(matchItem['key'] + ":" + f"'{matchItem['value']}'")
+                query.append(",")
+        query.pop()
+        query.append("})")
+        query.append(f" , (snode:{types[1]} {{")
+        print("query here", query)
+        for matchItem in matchNode2:
+                query.append(matchItem['key'] + ":" + f"'{matchItem['value']}'")
+                query.append(",")
+        query.pop()
+        query.append("})")
+        query.append(f" CREATE (fnode) - [:{relationName}] -> (snode)")
+        self.driver.session().run("".join(query))
 neo = Neo4jOOP("bolt://localhost:7687",  user="neo4j", password="pwd")
-print(neo.delete_all("person", name="hi", age="test"))
-
+# neo.add_node("Project", projectName="Matching App" , length="3 Months")
+# neo.add_node("Location", country="France")
+# print(neo.add_relationship(["Project", "Location"], [{"key": "projectName", "value":"Matching App"}, {"key": "length", "value":"3 Months"}], [{"key": "country", "value":"France"}] , "IN"))
     
