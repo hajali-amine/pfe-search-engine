@@ -1,10 +1,10 @@
 import csv
-from py2neo import Graph, Node, Relationship
+from py2neo import Graph, Node, Relationship, NodeMatcher
 
-def check_node_if_exists(g: Graph, type: str, data: str):
+def check_node_if_exists(g, type: str, data: str):
     c = Node(type, name=data)
-    exists = g.exists(c)
-    c = g.match(c).first() if exists else c
+    exists = g.match(type).where(f"_.name = '{data}'").first()
+    c = exists if exists is not None else c
     return c, exists
 
 def update_or_create(tx, node_checked):
@@ -14,7 +14,7 @@ def update_or_create(tx, node_checked):
 if __name__ == "__main__":
     print("here")
     g = Graph("http://://localhost:7474/db/data/",  user="neo4j", password="pwd")
-    tx = g.begin()
+    node_matcher = NodeMatcher(g)
 
     ifile = open('output/clean.csv', "r")
     reader = csv.reader(ifile)
@@ -24,6 +24,8 @@ if __name__ == "__main__":
     REQUIRING = "REQUIRING"
     
     for row in reader:
+        tx = g.begin()
+
         print(row)
         title = row[0]
         company = row[1]
@@ -31,13 +33,13 @@ if __name__ == "__main__":
         position = row[3]
         skills = row[4].split(sep="-")
 
-        title_node = check_node_if_exists(g, "Title", title)
+        title_node = check_node_if_exists(node_matcher, "Title", title)
         update_or_create(tx, title_node)
-        company_node = check_node_if_exists(g, "Company", company)
+        company_node = check_node_if_exists(node_matcher, "Company", company)
         update_or_create(tx, company_node)
-        location_node = check_node_if_exists(g, "Location", location)
+        location_node = check_node_if_exists(node_matcher, "Location", location)
         update_or_create(tx, location_node)
-        position_node = check_node_if_exists(g, "Position", position)
+        position_node = check_node_if_exists(node_matcher, "Position", position)
         update_or_create(tx, position_node)
 
         tc = Relationship(title_node[0], AT, company_node[0])
@@ -57,6 +59,6 @@ if __name__ == "__main__":
             st = Relationship(skill_node[0], REQUIRING, title_node[0])
             tx.create(st)        
 
-    tx.commit()
+        tx.commit()
 
     ifile.close()
