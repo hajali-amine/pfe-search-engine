@@ -8,22 +8,23 @@ class Neo4jOOP:
     def close(self) -> None:
         self.driver.close()
 
-    def add_node(self, type, **kwargs): # (*list) (a, b, c, d)
-        query = [f"CREATE (:{type} {{"]
+    def build_node(self,nodeName, type, **kwargs):
+        node = [f"({nodeName}:{type} {{"]
         for key, value in kwargs.items():
-            query.append(key + ":" + f"'{value}'")
-            query.append(",")
-        query.pop()
-        query.append("})")
+            node.append(key + ":" + f"'{value}'")
+            node.append(",")
+        node.pop()
+        node.append("})")
+        return("".join(node))
+    def add_node(self, type, **kwargs): # (*list) (a, b, c, d)
+        query = [f"CREATE "]
+        query.append(self.build_node("", type, **kwargs))
         self.driver.session().run("".join(query))
     
     def match_node(self, type, **kwargs):
-        query = [f"Match (a:{type} {{"]
-        for key, value in kwargs.items():
-            query.append(key + ":" + f"'{value}'")
-            query.append(",")
-        query.pop()
-        query.append("}) RETURN a AS a")
+        query = [f"Match "]
+        query.append(self.build_node("a", type, **kwargs))
+        query.append(" RETURN a AS a")
         result =  self.driver.session().run("".join(query)).values()
         return self.parse_match_node(result)
 
@@ -44,24 +45,18 @@ class Neo4jOOP:
         result = self.driver.session().run("".join(query)).values()
         return result
     
-    def delete_all_nodes(self, type, **kwargs):
-        query = [f"Match (a:{type} {{"]
-        for key, value in kwargs.items():
-            query.append(key + ":" + f"'{value}'")
-            query.append(",")
-        query.pop()
-        query.append("}) DELETE a")
+    def delete_nodes(self, type, **kwargs):
+        query = [f"Match "]
+        query.append(self.build_node("a", type, **kwargs))
+        query.append(" DELETE a")
         return self.driver.session().run("".join(query)).values()
     def purge(self):
         query = ["Match (a) -[r] -> (c) delete a, r, c;"]
         return self.driver.session().run("".join(query)).values()
     def count_node(self, type, **kwargs):
-        query = [f"Match (a:{type} {{"]
-        for key, value in kwargs.items():
-                query.append(key + ":" + f"'{value}'")
-                query.append(",")
-        query.pop()
-        query.append("}) RETURN count(a) AS nodes ")
+        query = [f"Match "]
+        query.append(neo.build_node("a", type, **kwargs))
+        query.append(" RETURN count(a) AS nodes ")
         return self.driver.session().run("".join(query)).single()["nodes"]
     def get_node_id(self, type, **kwargs):
        return  self.match_node(type, **kwargs)[0]["id"]
@@ -73,25 +68,19 @@ class Neo4jOOP:
         query.pop()
         query.append(" RETURN a")
         return self.driver.session().run("".join(query)).values()
-    def add_relationship(self, types, matchNode1, matchNode2, relationName, **kwargs):
-        query = [f"Match (fnode:{types[0]} {{"]
-        for matchItem in matchNode1:
-                query.append(matchItem['key'] + ":" + f"'{matchItem['value']}'")
-                query.append(",")
-        query.pop()
-        query.append("})")
-        query.append(f" , (snode:{types[1]} {{")
-        print("query here", query)
-        for matchItem in matchNode2:
-                query.append(matchItem['key'] + ":" + f"'{matchItem['value']}'")
-                query.append(",")
-        query.pop()
-        query.append("})")
+    def add_relationship(self, types, matchNode1, matchNode2, relationName):
+        query = [f"Match "]
+        query.append(self.build_node("fnode",types[0], **matchNode1))
+        query.append(f" , ")
+        query.append(self.build_node("snode", types[1], **matchNode2))
         query.append(f" CREATE (fnode) - [:{relationName}] -> (snode)")
         self.driver.session().run("".join(query))
 neo = Neo4jOOP("bolt://localhost:7687",  user="neo4j", password="pwd")
 # neo.add_node("Project", projectName="Matching App" , length="3 Months")
 # neo.add_node("Location", country="France")
-# print(neo.add_relationship(["Project", "Location"], [{"key": "projectName", "value":"Matching App"}, {"key": "length", "value":"3 Months"}], [{"key": "country", "value":"France"}] , "IN"))
-franceNode=neo.get_node_id("Location",country="France")
-print( neo.update_node_by_id("Location", franceNode, town="Paris", postalCode="7500"))
+neo.add_node("Company", companyName="Mantu", employees="100")
+print(neo.add_relationship(["Project", "Company"], {'projectName' :"Matching App", 'length' : "3 Months"}, {'companyName':"Mantu"} , "AT"))
+# franceNode=neo.get_node_id("Location",country="France")
+# print( neo.update_node_by_id("Location", franceNode, town="Paris", postalCode="7500"))
+# print(neo.match_node("Location", country="France", town ="Paris"))
+# neo.delete_nodes("Company", companyName="Mantu", employees="100")
