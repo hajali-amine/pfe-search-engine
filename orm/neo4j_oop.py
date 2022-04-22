@@ -75,12 +75,21 @@ class Neo4jOOP:
         query.append(self.build_node("snode", types[1], **matchNode2))
         query.append(f" CREATE (fnode) - [:{relationName}] -> (snode)")
         self.driver.session().run("".join(query))
+    def get_full_relationship(self, types, matchNode1, matchNode2, relationName):
+        query = [f"Match "]
+        query.append(self.build_node("fnode",types[0], **matchNode1))
+        query.append(f" - [rel:{relationName}] -> ")
+        query.append(self.build_node("snode", types[1], **matchNode2))
+        query.append("RETURN fnode, snode, rel")
+        return self.driver.session().run("".join(query)).values()
+
 neo = Neo4jOOP("bolt://localhost:7687",  user="neo4j", password="pwd")
 # neo.add_node("Project", projectName="Matching App" , length="3 Months")
 # neo.add_node("Location", country="France")
-neo.add_node("Company", companyName="Mantu", employees="100")
-print(neo.add_relationship(["Project", "Company"], {'projectName' :"Matching App", 'length' : "3 Months"}, {'companyName':"Mantu"} , "AT"))
+# neo.add_node("Company", companyName="Mantu", employees="100")
+# print(neo.add_relationship(["Project", "Company"], {'projectName' :"Matching App", 'length' : "3 Months"}, {'companyName':"Mantu"} , "AT"))
 # franceNode=neo.get_node_id("Location",country="France")
 # print( neo.update_node_by_id("Location", franceNode, town="Paris", postalCode="7500"))
 # print(neo.match_node("Location", country="France", town ="Paris"))
 # neo.delete_nodes("Company", companyName="Mantu", employees="100")
+print(neo.get_full_relationship(["Project", "Company"], {'projectName' :"Matching App", 'length' : "3 Months"}, {'companyName':"Mantu"} , "AT"))
