@@ -1,13 +1,14 @@
 import neo4j
+from query_builder import QueryBuilder
 from typing import List, NoReturn
 
 class Neo4jOOP:
     def __init__(self, uri: str, user: str, password: str) -> None:
         self.driver = neo4j.GraphDatabase.driver(uri, auth=(user, password))
-
     def close(self) -> None:
         self.driver.close()
-
+    def execute_query(self, query):
+        return self.driver.session().run(query).values()
     def build_node(self,nodeName, type, **kwargs):
         node = [f"({nodeName}:{type} {{"]
         for key, value in kwargs.items():
@@ -84,12 +85,20 @@ class Neo4jOOP:
         return self.driver.session().run("".join(query)).values()
 
 neo = Neo4jOOP("bolt://localhost:7687",  user="neo4j", password="pwd")
+queryBuilder = QueryBuilder("Match")
+queryBuilder.match_first_node("project", "Project")
+queryBuilder.add_relationship("inside","IN")
+queryBuilder.add_node("city", "Location", country="France", town="Paris")
+queryBuilder.return_all_nodes_relations()
+query= queryBuilder.return_query()
+print (query)
+print(neo.execute_query(query))
 # neo.add_node("Project", projectName="Matching App" , length="3 Months")
 # neo.add_node("Location", country="France")
 # neo.add_node("Company", companyName="Mantu", employees="100")
 # print(neo.add_relationship(["Project", "Company"], {'projectName' :"Matching App", 'length' : "3 Months"}, {'companyName':"Mantu"} , "AT"))
 # franceNode=neo.get_node_id("Location",country="France")
 # print( neo.update_node_by_id("Location", franceNode, town="Paris", postalCode="7500"))
-print(neo.match_node("Location", country="France", town ="Paris"))
+# print(neo.match_node("Location", country="France", town ="Paris"))
 # neo.delete_nodes("Company", companyName="Mantu", employees="100")
 # print(neo.get_full_relationship(["Project", "Company"], {'projectName' :"Matching App", 'length' : "3 Months"}, {'companyName':"Mantu"} , "AT"))
