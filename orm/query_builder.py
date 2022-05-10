@@ -14,7 +14,8 @@ class QueryBuilder:
         return self
     
     def node(self, name, type, **kwargs):
-        self.query.append(f"({name}:{type} {{")
+        self.query.append(f"({name}:{type}")
+        self.query.append("{")
         for key, value in kwargs.items():
             self.query.append(key + ":" + f"'{value}'")
             self.query.append(",")
@@ -25,7 +26,8 @@ class QueryBuilder:
     def relation(self, name, type, direction, **kwargs):
         if direction == Direction.LEFT:
             self.query.append("<")
-        self.query.append(f"-[{name}:{type} {{")
+        self.query.append(f"-[{name}:{type} ")
+        self.query.append("{")
         for key, value in kwargs.items():
             self.query.append(key + ":" + f"'{value}'")
             self.query.append(",")
