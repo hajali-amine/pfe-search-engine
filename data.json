@@ -1,0 +1,7 @@
+{
+    "title":"Cloud DevOps",
+    "desc":"Lorem Epsum",
+    "company":"Deltek, Inc.",
+    "location":"Remote",
+    "skills":[{"Python": "programming language"}, {"Big data": "paradigm "}, {"Linux": "operating system"}]
+}

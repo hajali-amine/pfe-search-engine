@@ -1,6 +1,6 @@
 venv
 output
-
+__pycache__/
 conf
 data
 import
