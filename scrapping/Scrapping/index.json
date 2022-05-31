@@ -1,0 +1,14 @@
+{
+    "SITE_URL": "https://www.simplyhired.com/search?q=devops+internship&l=&job=WHoN7Js-7u7DphMDQnWutGqIk5Yqb5ACwjj4ERNs_QIc61EhAb9CUA",
+    "OFFER_DIV_TAG": "article",
+    "TITLE_TAG_NAME": "h3",
+    "TITLE_SEARCH_TAG": "TAG_NAME",
+    "COMPANY_TAG_NAME": "jobposting-company",
+    "COMPANY_SEARCH_TAG": "CLASS_NAME",
+    "LOCATION_TAG_NAME": "jobposting-location",
+    "LOCATION_SEARCH_TAG": "CLASS_NAME",
+    "DESCRIPTION_TAG_NAME":"jobposting-snippet",
+    "DESCRIPTION_SEARCH_TAG":"CLASS_NAME",
+    "LOGO_TAG_NAME":"viewjob-company-logoImg",
+    "LOGO_SEARCH_TAG":"CLASS_NAME"
+  }
