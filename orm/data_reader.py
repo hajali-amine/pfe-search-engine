@@ -12,8 +12,8 @@ class DataReader:
             .match().node("l", "Location").relation("in", "IN", Direction.NONE).node("i", "Internship")\
                 .match().node("c", "Company").relation("at", "AT", Direction.NONE).node("i", "Internship")\
                     .match().node("i", "Internship").relation("req", "REQUIRE", Direction.NONE).node("s", "Skill")\
-                        .where(f"{filter[0]}.name CONTAINS toLower('{search}'")\
-                            .to_return("i.name", "l.name", "c.name", "COLLECT(s.name)")
+                        .where(f"toLower({filter[0]}.name) CONTAINS toLower('{search}')")\
+                            .to_return("{internship: i.name, description:i.description, location: l.name, company: c.name, logo: c.logo, skills: COLLECT(s.name)}")
         return neo.execute_query(query_builder.build())
 
     def search_by_skill(neo, search):
@@ -24,8 +24,8 @@ class DataReader:
                 .match().node("l", "Location").relation("in", "IN", Direction.NONE).node("i", "Internship")\
                     .match().node("c", "Company").relation("at", "AT", Direction.NONE).node("i", "Internship")\
                         .match().node("s_prime", "Skill").relation("req_prime", "REQUIRE", Direction.NONE).node("i", "Internship")\
-                            .where(f"s.name CONTAINS '{search}'")\
-                                .to_return("i.name", "l.name", "c.name", "COLLECT(s_prime.name)")
+                            .where(f"toLower(s.name) CONTAINS toLower('{search}')")\
+                                .to_return("{internship: i.name, location: l.name, company: c.name, logo: c.logo, skills: COLLECT(s_prime.name)}")
         main_result = neo.execute_query(query_builder.build())
         print(main_result)
 
@@ -36,8 +36,8 @@ class DataReader:
                         .match().node("l", "Location").relation("in", "IN", Direction.NONE).node("i", "Internship")\
                             .match().node("c", "Company").relation("at", "AT", Direction.NONE).node("i", "Internship")\
                                 .match().node("s_prime", "Skill").relation("req_prime", "REQUIRE", Direction.NONE).node("i", "Internship")\
-                                    .where(f"s.name CONTAINS '{search}'")\
-                                        .to_return("i.name", "l.name", "c.name", "COLLECT(s_prime.name)")
+                                    .where(f"toLower(s.name) CONTAINS toLower('{search}')")\
+                                        .to_return("{internship: i.name, description:i.description, location: l.name, company: c.name, logo: c.logo, skills: COLLECT(s_prime.name)}")
         related_results = neo.execute_query(query_builder.build())
         print(related_results)
 

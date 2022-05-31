@@ -21,12 +21,3 @@ class Neo4jOOP:
     def purge(self):
         query = ["Match (a) -[r] -> (c) delete a, r, c;"]
         return self.driver.session().run("".join(query)).values()
-
-neo = Neo4jOOP("bolt://localhost:7687",  user="neo4j", password="pwd")
-queryBuilder = QueryBuilder()
-query = queryBuilder.create().node("a", "Person").build()
-neo.execute_query(query)
-# a = input()
-# query = queryBuilder.match().node("a", "Person", ism="Mahdi").set("a", ism="med").set("a", age="thletha").to_return("a").build()
-
-print(neo.execute_query(query))
