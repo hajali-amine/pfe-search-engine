@@ -35,6 +35,9 @@ jobs:
 
         - name: Run docker-compose
           run: |
+            which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+            mkdir -p ~/.ssh
+            eval $(ssh-agent -s)
             echo "${{ secrets.EC2_PRIVATE_KEY  }}" > private_key.pem && chmod 400 private_key.pem
             echo  "ceci est un test" > test
             cat test
