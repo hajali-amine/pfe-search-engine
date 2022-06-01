@@ -9,7 +9,7 @@ class DataLoader:
         query_builder\
             .merge().node("l", "Location", name=data["location"])\
                 .merge().node("c", "Company", name=data["company"], logo=data["logo"])\
-                    .merge().node("i", "Internship", name=data["title"], desc=data["description"])\
+                    .merge().node("i", "Internship", name=data["title"], desc=data["description"], link=data["link"])\
                         .merge().node("i", "").relation("in" ,"IN", Direction.NONE).node("l", "")\
                             .merge().node("i", "").relation("at" ,"AT", Direction.NONE).node("c", "")
 
