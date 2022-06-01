@@ -44,6 +44,6 @@ jobs:
             cat test
             ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USERNAME  }}@${{ secrets.EC2_HOSTNAME  }}
             
-              #Now we have got the access of EC2 and we will start the deploy .
+              #Now we have got the access of EC2 and we will start the deploy.
               sudo docker-compose rm -s -v -f search_engine
               sudo docker-compose up -d search_engine
