@@ -35,7 +35,7 @@ jobs:
 
         - name: Run docker-compose
           run: |
-            echo "${{ secrets.EC2_PRIVATE_KEY  }}" > private_key && chmod 400 private_key
+            echo "${{ secrets.EC2_PRIVATE_KEY  }}" > private_key && chmod 600 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USERNAME  }}@${{ secrets.EC2_HOSTNAME  }} '
             
               #Now we have got the access of EC2 and we will start the deploy .
