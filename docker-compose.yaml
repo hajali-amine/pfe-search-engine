@@ -1,5 +1,13 @@
 version: '3'
 services:
+  search_engine:
+    image: aminehajali/neo-searchengine:latest
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    environment:
+      - NEO4J_URL=bolt://neo4j:7687
+
   neo4j:
     image: neo4j:3.5
     restart: unless-stopped

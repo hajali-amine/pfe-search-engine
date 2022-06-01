@@ -7,11 +7,9 @@ from api.data_loader import DataLoader
 from api.data_reader import DataReader
 from graph_driver.neo4j_oop import Neo4jOOP
 
-dotenv.load_dotenv()
-
 app = Flask(__name__)
 
-neo = Neo4jOOP("bolt://localhost:7687",  user=os.environ["NEO4J_USERNAME"], password=os.environ["NEO4J_PASSWORD"])
+neo = Neo4jOOP(os.environ["NEO4J_URL"],  user=os.environ["NEO4J_USERNAME"], password=os.environ["NEO4J_PASSWORD"])
 
 @app.route("/api", methods=["POST"])
 def get_data_to_insert():
