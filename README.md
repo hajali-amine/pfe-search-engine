@@ -35,3 +35,4 @@ Thus, the database looks like the following;
 - [ ] Save logs.
 - [ ] Improve the front's UI.
 - [ ] Add a CI/CD pipeline.
+- [ ] Learn and apply security best practices.
