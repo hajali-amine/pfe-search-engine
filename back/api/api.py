@@ -2,12 +2,15 @@ import os
 from urllib import request
 import dotenv
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 
 from api.data_loader import DataLoader
 from api.data_reader import DataReader
 from graph_driver.neo4j_oop import Neo4jOOP
 
 app = Flask(__name__)
+CORS(app)
 
 neo = Neo4jOOP(os.environ["NEO4J_URL"],  user=os.environ["NEO4J_USERNAME"], password=os.environ["NEO4J_PASSWORD"])
 

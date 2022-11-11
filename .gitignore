@@ -1,6 +1,6 @@
 venv
 output
-__pycache__/
+__pycache__
 conf
 data
 import
@@ -8,3 +8,5 @@ logs
 plugins
 .env
 geckodriver.log
+node_modules
+package-lock.json

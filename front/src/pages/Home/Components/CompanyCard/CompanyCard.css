@@ -1,0 +1,34 @@
+.company_card {
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  padding: 10px;
+  position: relative;
+}
+
+.company_image {
+  width: 64px;
+  height: 64px;
+  margin-left: -155px;
+  margin-right: 40px;
+}
+
+.company_image > img {
+  width: 64px;
+  height: 64px;
+}
+
+.apply_btn {
+  position: absolute;
+  right: 3rem;
+  top: 4rem;
+  background: #d75809;
+  border-radius: 7px;
+  padding: 11px;
+  text-decoration: auto;
+  color: azure;
+}

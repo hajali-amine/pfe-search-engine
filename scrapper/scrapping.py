@@ -150,5 +150,5 @@ def scrap_data_to_load(url, event):
         print(data)
         _ = requests.post(url, json=data)
 
-    driver.close();
-    driver.quit();
+    driver.close()
+    driver.quit()

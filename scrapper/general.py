@@ -21,7 +21,7 @@ def get_page_offers(driver, OFFER_DIV_TAG):
 
 
 def load_skills():
-    f = open('scrapping/skills.json')
+    f = open('skills.json')
     skills = json.load(f)
     return skills
 
