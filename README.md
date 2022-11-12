@@ -34,5 +34,6 @@ Thus, the database looks like the following;
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
 - [ ] Save logs.
 - [ ] Improve the front's UI.
+- [ ] Add UTs
 - [ ] Add a CI/CD pipeline.
 - [ ] Learn and apply security best practices.
