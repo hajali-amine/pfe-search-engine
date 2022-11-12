@@ -8,19 +8,19 @@ class QueryBuilder:
     def create(self):
         self.query.append("CREATE ")
         return self
-    
+
     def match(self):
         self.query.append("MATCH ")
         return self
-    
+
     def merge(self):
         self.query.append("MERGE ")
         return self
-    
+
     def on_create(self):
         self.query.append("ON CREATE ")
         return self
-    
+
     def on_match(self):
         self.query.append("ON MATCH ")
         return self
@@ -54,7 +54,7 @@ class QueryBuilder:
         elif direction == Direction.NONE:
             self.query.append(" ")
         return self
-    
+
     def set(self, who, **kwargs):
         self.query.append("SET ")
         for key, value in kwargs.items():
@@ -63,7 +63,7 @@ class QueryBuilder:
         self.query.pop()
         self.query.append(" ")
         return self
-    
+
     def to_return(self, *args):
         self.query.append("RETURN ")
         for element in args:
@@ -72,7 +72,7 @@ class QueryBuilder:
         self.query.pop()
         self.query.append(" ")
         return self
-    
+
     def where(self, condition):
         self.query.append("WHERE ")
         self.query.append(condition)
