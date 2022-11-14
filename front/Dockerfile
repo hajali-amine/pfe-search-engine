@@ -1,3 +1,4 @@
+# Build Frontend
 FROM node:12-alpine as builder
 WORKDIR /app
 COPY package.json .
@@ -6,6 +7,7 @@ COPY . .
 ENV REACT_APP_BACKEND_URL=http://localhost:5000
 RUN npm run build
 
+# Serve Front with Nginx
 FROM nginx:1.19.0
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
