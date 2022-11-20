@@ -1,11 +1,7 @@
 venv
 output
 __pycache__
-conf
-data
-import
-logs
-plugins
+dvolumes
 .env
 geckodriver.log
 node_modules
