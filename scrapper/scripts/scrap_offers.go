@@ -2,9 +2,11 @@ package scripts
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"searchengine/scrapper/constants"
 	"searchengine/scrapper/types"
+	"strconv"
 	"time"
 
 	"github.com/tebeka/selenium"
@@ -13,7 +15,7 @@ import (
 const (
 	INTERNSHIPS_WEBSITE_URL string = "https://www.simplyhired.com/search?q=devops+internship&l=&job=WHoN7Js-7u7DphMDQnWutGqIk5Yqb5ACwjj4ERNs_QIc61EhAb9CUA"
 	OFFERS_CLASSNAME               = "SerpJob-jobCard"
-	OFFERS_CSS              = "#job-list > li > article"
+	OFFERS_CSS                     = "#job-list > li > article"
 	TITLE_CLASSNAME                = "jobposting-title"
 	COMPANY_CLASSNAME              = "jobposting-company"
 	LOCATION_CLASSNAME             = "jobposting-location"
@@ -91,8 +93,9 @@ func ScrapOffers(driver selenium.WebDriver) {
 
 	fmt.Println("Scrapping in progress...")
 	jobs := []types.Job{}
-	// TODO: Get the number of pages to scrap from env variable
-	for i := 0; i < 2; i++ {
+	nbPages, _ := strconv.Atoi(os.Getenv("NB_PAGES_TO_SCRAP"))
+
+	for i := 0; i < nbPages; i++ {
 		jobOffers, err := driver.FindElements(selenium.ByClassName, OFFERS_CLASSNAME)
 		if err != nil {
 			panic(err)

@@ -20,5 +20,7 @@ WORKDIR /app
 COPY ./go.* /app/
 RUN go mod download
 
+ENV NB_PAGES_TO_SCRAP=5
+
 COPY . /app
 CMD go run scrapper.go
