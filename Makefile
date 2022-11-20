@@ -1,12 +1,22 @@
 b=all
 
 build:
-	@if [ $b = "all" ] ; then docker build -t aminehajali/se-front ./front && docker build -t aminehajali/se-back ./back ; fi
-	@if [ ! $b = "all" ] ; then docker build -t aminehajali/se-$b ./$b ; fi
+	@echo "What image would you like to build?\nWrite 'a' to build all of the images" ; \
+	read r ; \
+	if [ "$$r" = "a" ] ; then \
+		./scripts/build.sh -a ; \
+	else \
+		./scripts/build.sh -i $$r ; \
+	fi ; \
 
-push: build
-	@if [ $b = "all" ] ; then docker push aminehajali/se-front && docker push aminehajali/se-back ; fi
-	@if [ ! $b = "all" ] ; then docker push aminehajali/se-$b ; fi
+push:
+	@echo "What image would you like to push?\nWrite 'a' to push all of the images" ; \
+	read r ; \
+	if [ "$$r" = "a" ] ; then \
+		./scripts/push.sh -a ; \
+	else \
+		./scripts/push.sh -i $$r ; \
+	fi ; \
 
 create-local-cluster:
 	@kind create cluster

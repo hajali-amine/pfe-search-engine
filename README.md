@@ -30,7 +30,7 @@ Thus, the database looks like the following;
 - [ ] Convert the scapping scripts to go and dockerize it.
 - [ ] Use RabbitMQ between the scrapper and the loader.
 - [x] Seperate the backend to two different containers, one for the reader and one for the loader.
-- [ ] Add scripts for the Makefile.
+- [x] Add scripts for the Makefile.
 - [ ] Use K8S for deployment.
 - [ ] Use Helm to package the different entities.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
