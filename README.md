@@ -35,6 +35,7 @@ Thus, the database looks like the following;
 - [ ] Use Helm to package the different entities.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
 - [ ] Save logs.
+- [ ] Make an ingress with a domain name.
 - [ ] Improve the front's UI.
 - [ ] Add UTs
 - [ ] Add a CI/CD pipeline.

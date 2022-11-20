@@ -10,9 +10,9 @@ COPY graph_driver graph_driver
 
 COPY graph_query_builder graph_query_builder
 
-COPY data_loader api
+COPY data_loader loader
 
-ENV FLASK_APP=api.api
+ENV PYTHONPATH=/app
 
 ENV NEO4J_USERNAME=
 
@@ -20,6 +20,8 @@ ENV NEO4J_PASSWORD=
 
 ENV NEO4J_URL=bolt://localhost:7687
 
+ENV RABBITMQ_URL=localhost
+
 EXPOSE 5000
 
-CMD flask run --host=0.0.0.0
+CMD python3 loader/consumer.py
