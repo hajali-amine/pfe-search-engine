@@ -7,10 +7,19 @@ services:
     environment:
       - REACT_APP_BACKEND_URL=http://localhost:5000
 
-  backend:
-    image: aminehajali/se-back
+  datareader:
+    image: aminehajali/se-datareader
     ports:
       - 5000:5000
+    environment:
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_PASSWORD=pwd  
+
+  dataloader:
+    image: aminehajali/se-dataloader
+    ports:
+      - 5001:5000
     environment:
       - NEO4J_URL=bolt://neo4j:7687
       - NEO4J_USERNAME=neo4j

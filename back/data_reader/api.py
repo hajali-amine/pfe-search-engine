@@ -1,13 +1,11 @@
 import os
-from urllib import request
-import dotenv
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
 
 
-from api.data_loader import DataLoader
 from api.data_reader import DataReader
 from graph_driver.neo4j_oop import Neo4jOOP
+
 
 app = Flask(__name__)
 CORS(app)
@@ -18,15 +16,6 @@ neo = Neo4jOOP(
     user=os.environ["NEO4J_USERNAME"],
     password=os.environ["NEO4J_PASSWORD"],
 )
-
-
-@app.route("/api", methods=["POST"])
-@cross_origin()
-def get_data_to_insert():
-    data = request.get_json()
-    print(data)
-    DataLoader.load(neo=neo, data=data)
-    return "jawwek behi"
 
 
 @app.route("/api/<filter>/<search>", methods=["GET"])
