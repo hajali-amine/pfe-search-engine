@@ -27,7 +27,7 @@ Thus, the database looks like the following;
 
 ## Next Steps
 
-- [ ] Convert the scapping scripts to go and dockerize it.
+- [x] Convert the scapping scripts to go and dockerize it.
 - [ ] Use RabbitMQ between the scrapper and the loader.
 - [x] Seperate the backend to two different containers, one for the reader and one for the loader.
 - [x] Add scripts for the Makefile.

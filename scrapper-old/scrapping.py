@@ -52,13 +52,6 @@ def get_skills(driver, offer):
 
         qualifications = driver.find_elements(By.CLASS_NAME, QUALIFICATIONS_TAG_NAME)
 
-    # for qualification in qualifications:
-    #     if(not (qualification.text in skills_array)):
-    #         with open("skills.txt", "a") as file_object:
-    #             file_object.write('\n' + qualification.text)
-
-    #     skills.append(qualification.text)
-
     for qualification in qualifications:
         if qualification.text in skills_array:
             item = {qualification.text: skills_array[qualification.text]}

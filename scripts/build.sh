@@ -32,13 +32,18 @@ function build_datareader {
 }
 
 function build_front {
-    build_image  front front
+    build_image front front
+}
+
+function build_scrapper {
+    build_image scrapper scrapper
 }
 
 function build_all {
     build_front
     build_datareader
     build_dataloader
+    build_scrapper
 }
 
 if [ $# -eq 0 ] ; then
@@ -74,7 +79,7 @@ if  [ $# -ge "1" ] ; then
 
         while (("$#")); do
             case "$1" in
-            front)
+            front|fr)
                 build_front
                 shift 1
                 ;;
@@ -84,6 +89,10 @@ if  [ $# -ge "1" ] ; then
                 ;;
             datareader|dr)
                 build_datareader
+                shift 1
+                ;;
+            scrapper|sc)
+                build_scrapper
                 shift 1
                 ;;
             *)

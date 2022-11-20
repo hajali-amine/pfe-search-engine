@@ -23,6 +23,7 @@ function push_all {
     push_image front
     push_image datareader
     push_image dataloader
+    push_image scrapper
 }
 
 if [ $# -eq 0 ] ; then
@@ -58,7 +59,7 @@ if  [ $# -ge "1" ] ; then
 
         while (("$#")); do
             case "$1" in
-            front)
+            front|fr)
                 push_image front
                 shift 1
                 ;;
@@ -68,6 +69,10 @@ if  [ $# -ge "1" ] ; then
                 ;;
             datareader|dr)
                 push_image datareader
+                shift 1
+                ;;
+            scrapper|sc)
+                push_image scrapper
                 shift 1
                 ;;
             *)

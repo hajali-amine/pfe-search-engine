@@ -18,6 +18,9 @@ push:
 		./scripts/push.sh -i $$r ; \
 	fi ; \
 
+docker-run:
+	@docker run aminehajali/se-$i
+
 create-local-cluster:
 	@kind create cluster
 	@kubectl cluster-info --context kind-kind
