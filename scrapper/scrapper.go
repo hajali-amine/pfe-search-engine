@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"os"
+	"searchengine/scrapper/scripts"
 
 	"github.com/tebeka/selenium"
 	"github.com/tebeka/selenium/chrome"
@@ -29,5 +29,5 @@ func main() {
     if err != nil {
         panic(err)
     }
-    driver.Get("https://www.google.com")
+    scripts.ScrapOffers(driver)
 }
