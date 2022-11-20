@@ -28,6 +28,7 @@ Thus, the database looks like the following;
 ## Next Steps
 
 - [ ] Convert the scapping scripts to go and dockerize it.
+- [ ] Use RabbitMQ between the scrapper and the loader.
 - [ ] Seperate the backend to two different containers, one for the reader and one for the loader.
 - [ ] Use K8S for deployment.
 - [ ] Use Helm to package the different entities.
