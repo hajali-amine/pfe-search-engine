@@ -44,6 +44,11 @@ func getCompany(offer selenium.WebElement) string {
 	return company
 }
 
+// * Support logos in future versions
+func getLogo(offer selenium.WebElement) string {
+	return "to be supported"
+}
+
 func getLocation(offer selenium.WebElement) string {
 	locationElement, err := offer.FindElement(selenium.ByClassName, LOCATION_CLASSNAME)
 	if err != nil {
@@ -107,6 +112,7 @@ func ScrapOffers(driver selenium.WebDriver) {
 				Description: getDescription(jobOffer),
 				Location:    getLocation(jobOffer),
 				Company:     getCompany(jobOffer),
+				Logo:		 getLogo(jobOffer),
 				Skills:      getSkills(driver, jobOffer),
 			}
 			// ! This will be sent in RabbitMQ to the data loader
