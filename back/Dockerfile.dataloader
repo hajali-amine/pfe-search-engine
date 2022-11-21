@@ -22,6 +22,12 @@ ENV NEO4J_URL=bolt://localhost:7687
 
 ENV RABBITMQ_URL=localhost
 
+ENV WAIT_VERSION 2.7.2
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+
+RUN chmod +x /wait
+
 EXPOSE 5000
 
 CMD python3 loader/consumer.py
