@@ -5,10 +5,12 @@ import (
 	"os"
 	"regexp"
 	"searchengine/scrapper/constants"
+	"searchengine/scrapper/loader"
 	"searchengine/scrapper/types"
 	"strconv"
 	"time"
 
+	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/tebeka/selenium"
 )
 
@@ -46,6 +48,11 @@ func getCompany(offer selenium.WebElement) string {
 
 // * Support logos in future versions
 func getLogo(offer selenium.WebElement) string {
+	return "to be supported"
+}
+
+// * Support links in future versions
+func getLink(offer selenium.WebElement) string {
 	return "to be supported"
 }
 
@@ -93,11 +100,11 @@ func getSkills(driver selenium.WebDriver, offer selenium.WebElement) []map[strin
 	return skills
 }
 
-func ScrapOffers(driver selenium.WebDriver) {
+func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel) {
 	driver.Get(INTERNSHIPS_WEBSITE_URL)
 
 	fmt.Println("Scrapping in progress...")
-	jobs := []types.Job{}
+	// jobs := []types.Job{}
 	nbPages, _ := strconv.Atoi(os.Getenv("NB_PAGES_TO_SCRAP"))
 
 	for i := 0; i < nbPages; i++ {
@@ -112,11 +119,12 @@ func ScrapOffers(driver selenium.WebDriver) {
 				Description: getDescription(jobOffer),
 				Location:    getLocation(jobOffer),
 				Company:     getCompany(jobOffer),
-				Logo:		 getLogo(jobOffer),
+				Logo:        getLogo(jobOffer),
+				Link:        getLink(jobOffer),
 				Skills:      getSkills(driver, jobOffer),
 			}
-			// ! This will be sent in RabbitMQ to the data loader
-			jobs = append(jobs, job)
+			loader.PublishMsg(channel, job)
+			// jobs = append(jobs, job)
 		}
 
 		next, err := driver.FindElement(selenium.ByClassName, NEXT_PAGE_CLASSNAME)
@@ -126,5 +134,4 @@ func ScrapOffers(driver selenium.WebDriver) {
 		next.Click()
 		time.Sleep(time.Second)
 	}
-	fmt.Println(jobs)
 }

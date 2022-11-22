@@ -1,33 +1,28 @@
 package main
 
 import (
-	"os"
+	"searchengine/scrapper/driver"
+	"searchengine/scrapper/loader"
 	"searchengine/scrapper/scripts"
-
-	"github.com/tebeka/selenium"
-	"github.com/tebeka/selenium/chrome"
 )
 
 func main() {
-	// Run Chrome browser
-	service, err := selenium.NewChromeDriverService(os.Getenv("CHROME_DRIVER_PATH"), 4444)
+	service, err := driver.GetChromeService()
 	if err != nil {
 		panic(err)
 	}
+
+	driver, err := driver.GetChromeDriver()
+	if err != nil {
+		panic(err)
+	}
+
+	conn, channel := loader.GetChannel()
+
+	scripts.ScrapOffers(driver, channel)
+
 	defer service.Stop()
-
-	caps := selenium.Capabilities{}
-	caps.AddChrome(chrome.Capabilities{Args: []string{
-		"window-size=1920x1080",
-		"--no-sandbox",
-		"--disable-dev-shm-usage",
-		"disable-gpu",
-		"--headless",
-	}})
-
-	driver, err := selenium.NewRemote(caps, "")
-	if err != nil {
-		panic(err)
-	}
-	scripts.ScrapOffers(driver)
+	defer driver.Close()
+	defer conn.Close()
+	defer channel.Close()
 }

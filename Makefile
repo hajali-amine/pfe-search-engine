@@ -32,4 +32,6 @@ local-run:
 	@docker compose up
 
 clean:
-	@find . -name "__pycache__" -exec rm -rf {} \; >> /dev/null
+	@find . -name "__pycache__" -exec rm -rf {} \; 2> /dev/null
+	@[ "$$(docker ps -q)" ] && docker kill $$(docker ps -q) || exit 0
+	@[ "$$(docker container ls -a -q)" ] && docker container rm $$(docker container ls -a -q) || exit 0

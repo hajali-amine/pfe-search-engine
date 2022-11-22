@@ -21,6 +21,11 @@ COPY ./go.* /app/
 RUN go mod download
 
 ENV NB_PAGES_TO_SCRAP=5
+ENV RABBITMQ_URL=localhost
+
+ENV WAIT_VERSION 2.7.2
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
 
 COPY . /app
 CMD go run scrapper.go

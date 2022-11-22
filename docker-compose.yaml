@@ -31,6 +31,15 @@ services:
       - RABBITMQ_URL=rabbitmq
       - WAIT_HOSTS=rabbitmq:5672
 
+  scrapper:
+    image: aminehajali/se-scrapper
+    container_name: scrapper
+    command: sh -c "/wait && go run scrapper.go"
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - WAIT_HOSTS=rabbitmq:5672
+      - NB_PAGES_TO_SCRAP=2
+
   neo4j:
     image: neo4j:3.5
     container_name: neo4j
