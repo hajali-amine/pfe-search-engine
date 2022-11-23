@@ -4,9 +4,11 @@ A search engine for final year internships.
 
 ## Components
 
-- __Backend:__ Implemented using Flask, and consists of two parts; the Data Reader and the Data Loader.
 - __Frontend:__ Implemented with ReactJS. It consists of a search bar and a search filter. Once you execute the search, a list of the offers that correspond to your search will be returned. It queries the result from the Data Reader.
-- __Scrapper:__ Implemented  with Python and the Selenium APIs. It is used to scrap job offers to load them to the database using the Data Loader.
+- __Data Reader:__ A Flask API that exposes an endpoint to do filtered searches.
+- __Scrapper:__ Implemented with Go - used to be in Python - and Selenium APIs. It is used to scrap job offers to load them to the database using the Data Loader.
+- __RabbitMQ:__ Used to transfer asynchronously the scrapped data to the Data Loader.
+-__Data Loader:__ This consumes the scrapped data and loads them in the Database.
 - __Database:__ We use Neo4J for our database. Having a Graph Database enables us to define perfectly the relations between the data.
 
 ## Workflow
@@ -33,10 +35,11 @@ Thus, the database looks like the following;
 - [x] Add scripts for the Makefile.
 - [x] Send messages in queue in Protocol Buffers - Google's data interchange format.
 - [ ] Add a prelimenary GitHub actions pipeline to push new docker images on every push.
+- [ ] Add logging in different components.
+- [ ] Add application metrics using Prometheus API.
 - [ ] Use K8S for deployment.
 - [ ] Use Helm to package the different entities.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
-- [ ] Save logs.
 - [ ] Make an ingress with a domain name.
 - [ ] Improve the front's UI.
 - [ ] Add UTs
