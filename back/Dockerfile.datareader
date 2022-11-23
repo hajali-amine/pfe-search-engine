@@ -2,7 +2,7 @@ FROM python:3.8-slim-buster
 
 WORKDIR /app
 
-COPY data_reader/requirements.txt requirements.txt
+COPY requirements-datareader.txt requirements.txt
 
 RUN pip3 install -r requirements.txt
 

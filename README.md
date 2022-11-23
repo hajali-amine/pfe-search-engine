@@ -31,7 +31,7 @@ Thus, the database looks like the following;
 - [x] Use RabbitMQ between the scrapper and the loader.
 - [x] Seperate the backend to two different containers, one for the reader and one for the loader.
 - [x] Add scripts for the Makefile.
-- [ ] Send messages in queue in Protocol Buffers - Google's data interchange format.
+- [x] Send messages in queue in Protocol Buffers - Google's data interchange format.
 - [ ] Use K8S for deployment.
 - [ ] Use Helm to package the different entities.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.

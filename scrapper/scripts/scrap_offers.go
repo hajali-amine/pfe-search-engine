@@ -79,8 +79,8 @@ func getDescription(offer selenium.WebElement) string {
 	return description
 }
 
-func getSkills(driver selenium.WebDriver, offer selenium.WebElement) []map[string]string {
-	skills := []map[string]string{}
+func getSkills(driver selenium.WebDriver, offer selenium.WebElement) []*types.Job_Skills {
+	skills := []*types.Job_Skills{}
 
 	offer.Click()
 	// TODO: Find a better solution to wait for the page
@@ -94,7 +94,7 @@ func getSkills(driver selenium.WebDriver, offer selenium.WebElement) []map[strin
 	for _, skillElement := range skillsElements {
 		skill, _ := skillElement.Text()
 		if theme, exists := constants.SkillsThemes[skill]; exists {
-			skills = append(skills, map[string]string{skill: theme})
+			skills = append(skills, &types.Job_Skills{Skill: skill, Theme: theme})
 		}
 	}
 	return skills
@@ -104,7 +104,6 @@ func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel) {
 	driver.Get(INTERNSHIPS_WEBSITE_URL)
 
 	fmt.Println("Scrapping in progress...")
-	// jobs := []types.Job{}
 	nbPages, _ := strconv.Atoi(os.Getenv("NB_PAGES_TO_SCRAP"))
 
 	for i := 0; i < nbPages; i++ {
@@ -123,10 +122,8 @@ func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel) {
 				Link:        getLink(jobOffer),
 				Skills:      getSkills(driver, jobOffer),
 			}
-			loader.PublishMsg(channel, job)
-			// jobs = append(jobs, job)
+			loader.PublishMsg(channel, &job)
 		}
-
 		next, err := driver.FindElement(selenium.ByClassName, NEXT_PAGE_CLASSNAME)
 		if err != nil {
 			break

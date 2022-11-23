@@ -29,7 +29,7 @@ class DataLoader:
         )
 
         for index, skillset in enumerate(data["skills"]):
-            ((skill, theme),) = skillset.items()
+            skill, theme = skillset["skill"], skillset["theme"]
             query_builder.merge().node(f"s{index}", "Skill", name=skill).merge().node(
                 f"t{index}", "Theme", name=theme
             ).merge().node(f"s{index}", "").relation(

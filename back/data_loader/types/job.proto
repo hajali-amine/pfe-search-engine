@@ -1,0 +1,18 @@
+syntax = "proto3";
+package types;
+
+message Job {
+  string title = 1;
+  string description = 2;
+  string company = 3;
+  string logo = 4;
+  string link = 5;
+  string location = 6;
+
+  message Skills {
+    string skill = 1;
+    string theme = 2;
+  }
+
+  repeated Skills skills = 7;
+}

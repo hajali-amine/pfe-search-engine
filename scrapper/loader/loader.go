@@ -2,11 +2,12 @@ package loader
 
 import (
 	"context"
-	"encoding/json"
 	"os"
 	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
 func GetChannel() (*amqp.Connection, *amqp.Channel) {
@@ -19,12 +20,11 @@ func GetChannel() (*amqp.Connection, *amqp.Channel) {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	return conn, ch
 }
 
-// TODO: Test this with the scrapper
-func PublishMsg(ch *amqp.Channel, msg interface{}) {
+func PublishMsg(ch *amqp.Channel, msg protoreflect.ProtoMessage) {
 	q, err := ch.QueueDeclare(
 		"loader", // name
 		false,    // durable
@@ -37,7 +37,7 @@ func PublishMsg(ch *amqp.Channel, msg interface{}) {
 		panic(err)
 	}
 
-	serializedMsg, err := json.Marshal(msg)
+	serializedMsg, err := proto.Marshal(msg)
 	if err != nil {
 		panic(err)
 	}

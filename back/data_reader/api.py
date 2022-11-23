@@ -1,11 +1,9 @@
 import os
-from flask import Flask, jsonify
-from flask_cors import CORS, cross_origin
-
 
 from api.data_reader import DataReader
+from flask import Flask, jsonify
+from flask_cors import CORS, cross_origin
 from graph_driver.neo4j_oop import Neo4jOOP
-
 
 app = Flask(__name__)
 CORS(app)
