@@ -32,6 +32,7 @@ Thus, the database looks like the following;
 - [x] Seperate the backend to two different containers, one for the reader and one for the loader.
 - [x] Add scripts for the Makefile.
 - [x] Send messages in queue in Protocol Buffers - Google's data interchange format.
+- [ ] Add a prelimenary GitHub actions pipeline to push new docker images on every push.
 - [ ] Use K8S for deployment.
 - [ ] Use Helm to package the different entities.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
