@@ -30,7 +30,6 @@ jobs:
             dockerfile: ./scrapper/Dockerfile
             tag: ghcr.io/hajali-amine/pfe-search-engine-scrapper
             dir: scrapper
-            
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -40,7 +39,7 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GH_TOKEN }}
-
+    # TODO: find better way to cache, this probably doesn't work
     - name: Cache Docker image layers
       uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
