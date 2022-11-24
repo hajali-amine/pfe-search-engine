@@ -16,19 +16,19 @@ jobs:
         include:
           - name: front
             dockerfile: ./front/Dockerfile
-            tag: hajali-amine/pfe-search-engine-front
+            tag: ghcr.io/hajali-amine/pfe-search-engine-front
             dir: front
           - name: dataloader
             dockerfile: ./back/Dockerfile.dataloader
-            tag: hajali-amine/pfe-search-engine-dataloader
+            tag: ghcr.io/hajali-amine/pfe-search-engine-dataloader
             dir: back
           - name: datareader
             dockerfile: ./back/Dockerfile.datareader
-            tag: hajali-amine/pfe-search-engine-datareader
+            tag: ghcr.io/hajali-amine/pfe-search-engine-datareader
             dir: back
           - name: scrapper
             dockerfile: ./scrapper/Dockerfile
-            tag: hajali-amine/pfe-search-engine-scrapper
+            tag: ghcr.io/hajali-amine/pfe-search-engine-scrapper
             dir: scrapper
     steps:
     - name: Checkout repository
