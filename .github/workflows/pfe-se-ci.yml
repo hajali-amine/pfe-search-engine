@@ -30,6 +30,7 @@ jobs:
             dockerfile: ./scrapper/Dockerfile
             tag: ghcr.io/hajali-amine/pfe-search-engine-scrapper
             dir: scrapper
+            
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
