@@ -5,6 +5,8 @@ set -e
 function help_text {
   printf """
 Build the project's docker images.
+You need to authencate to the ghcr.io: echo GH_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+
 Usage:
   -i    The docker image to build
   -a    Build all images
@@ -17,10 +19,10 @@ Example:
 
 function build_image (){
     if [ -z "$3" ] ; then
-        docker build -t aminehajali/se-$1 ./$2
+        docker build -t ghcr.io/hajali-amine/pfe-search-engine-$1 ./$2
         return 0
     fi
-    docker build -f ./$2/Dockerfile.$3 -t aminehajali/se-$1 ./$2
+    docker build -f ./$2/Dockerfile.$3 -t ghcr.io/hajali-amine/pfe-search-engine-$1 ./$2
 }
 
 function build_dataloader {

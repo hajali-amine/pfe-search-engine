@@ -5,6 +5,8 @@ set -e
 function help_text {
   printf """
 Push the project's docker images.
+You need to authencate to the ghcr.io: echo GH_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+
 Usage:
   -i    The docker image to push
   -a    Push all images
@@ -16,7 +18,7 @@ Example:
 }
 
 function push_image (){
-    docker push aminehajali/se-$1
+    docker push ghcr.io/hajali-amine/pfe-search-engine-$1
 }
 
 function push_all {

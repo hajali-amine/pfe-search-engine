@@ -1,5 +1,3 @@
-b=all
-
 build:
 	@echo "What image would you like to build?\nWrite 'a' to build all of the images" ; \
 	read r ; \
@@ -19,7 +17,7 @@ push:
 	fi ; \
 
 docker-run:
-	@docker run aminehajali/se-$i
+	@docker run ghcr.io/hajali-amine/pfe-search-engine-$i
 
 create-local-cluster:
 	@kind create cluster

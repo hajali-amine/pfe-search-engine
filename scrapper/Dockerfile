@@ -1,5 +1,8 @@
 FROM golang
 
+# TODO: minimize the size of the image - yaay, optimization time
+# ? Can I make it a multistage build where I take the chrome binary and the chrome driver to the final container?
+
 # Install Chrome
 RUN apt-get -y update
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -

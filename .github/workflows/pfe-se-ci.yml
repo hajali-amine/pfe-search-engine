@@ -2,7 +2,8 @@ name: PFE Search Engine CI 🔥
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
     paths-ignore:
       - '**/readme.md'
       - '**/assets/*'

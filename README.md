@@ -35,13 +35,14 @@ Thus, the database looks like the following;
 - [x] Add scripts for the Makefile.
 - [x] Send messages in queue in Protocol Buffers - Google's data interchange format.
 - [x] Add a prelimenary GitHub actions pipeline to push new docker images on every push.
+- [ ] Add a pre-commit hook.
 - [ ] Add logging in different components.
 - [ ] Add application metrics using Prometheus API.
 - [ ] Use K8S for deployment.
-- [ ] Use Helm to package the different entities.
+- [ ] Use Helm or Kustomize to package the different entities.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
 - [ ] Make an ingress with a domain name.
 - [ ] Improve the front's UI.
-- [ ] Add UTs
+- [ ] Add UTs.
 - [ ] Add a CI/CD pipeline.
 - [ ] Learn and apply security best practices.
