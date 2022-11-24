@@ -1,0 +1,52 @@
+name: PFE Search Engine CI
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**/readme.md'
+      - '**/assets/*'
+
+jobs:
+  build_and_push_front:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: front
+            dockerfile: ./front/Dockerfile
+            tag: hajali-amine/pfe-search-engine-front
+          - name: dataloader
+            dockerfile: ./back/Dockerfile.dataloader
+            tag: hajali-amine/pfe-search-engine-dataloader
+          - name: datareader
+            dockerfile: ./back/Dockerfile.datareader
+            tag: hajali-amine/pfe-search-engine-datareader
+          - name: scrapper
+            dockerfile: ./scrapper/Dockerfile
+            tag: hajali-amine/pfe-search-engine-scrapper
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Log in to the Container registry
+      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GH_TOKEN }}
+
+    - name: Cache Docker image layers
+      uses: satackey/action-docker-layer-caching@v0.0.11
+      continue-on-error: true
+      with:
+        key: ${{ matrix.name }}-docker-cache-{hash}
+        restore-keys: |
+          ${{ matrix.name }}-docker-cache
+    - name: Build and publish a Docker image for ${{ matrix.name }}
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      with:
+        context: .
+        file: ${{ matrix.dockerfile }}
+        push: true
+        tags: ${{ matrix.tag }}
