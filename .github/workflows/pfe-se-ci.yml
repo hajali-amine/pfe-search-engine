@@ -8,7 +8,7 @@ on:
       - '**/assets/*'
 
 jobs:
-  build_and_push_front:
+  build_and_push_docker_images:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
