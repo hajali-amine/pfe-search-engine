@@ -49,7 +49,7 @@ jobs:
         restore-keys: |
           ${{ matrix.name }}-docker-cache
     - name: Build and publish a Docker image for ${{ matrix.name }} 🐋
-      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./${{ matrix.dir }}
         file: ${{ matrix.dockerfile }}
