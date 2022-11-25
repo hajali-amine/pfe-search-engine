@@ -41,6 +41,7 @@ Thus, the database looks like the following;
 - [ ] Use K8S for deployment.
 - [ ] Use Helm or Kustomize to package the different entities.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
+- [ ] Add retention policy for logs both for dev and prod.
 - [ ] Make an ingress with a domain name.
 - [ ] Improve the front's UI.
 - [ ] Add UTs.

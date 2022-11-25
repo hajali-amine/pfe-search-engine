@@ -11,18 +11,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer service.Stop()
 
 	driver, err := driver.GetChromeDriver()
 	if err != nil {
 		panic(err)
 	}
+	defer driver.Close()
 
 	conn, channel := loader.GetChannel()
-
-	scripts.ScrapOffers(driver, channel)
-
-	defer service.Stop()
-	defer driver.Close()
 	defer conn.Close()
 	defer channel.Close()
+	
+	scripts.ScrapOffers(driver, channel)
 }
