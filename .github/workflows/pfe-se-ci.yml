@@ -18,22 +18,22 @@ jobs:
           - name: front
             dockerfile: ./front/Dockerfile
             ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-front
-            dh-tag: aminehajali/pfe-search-engine-front
+            dh-tag: ${{ secrets.DOCKERHUB_USERNAME }}/pfe-search-engine-front
             dir: front
           - name: dataloader
             dockerfile: ./back/Dockerfile.dataloader
             ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-dataloader
-            dh-tag: aminehajali/pfe-search-engine-dataloader
+            dh-tag: ${{ secrets.DOCKERHUB_USERNAME }}/pfe-search-engine-dataloader
             dir: back
           - name: datareader
             dockerfile: ./back/Dockerfile.datareader
             ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-datareader
-            dh-tag: aminehajali/pfe-search-engine-datareader
+            dh-tag: ${{ secrets.DOCKERHUB_USERNAME }}/pfe-search-engine-datareader
             dir: back
           - name: scrapper
             dockerfile: ./scrapper/Dockerfile
             ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-scrapper
-            dh-tag: aminehajali/pfe-search-engine-scrapper
+            dh-tag: ${{ secrets.DOCKERHUB_USERNAME }}/pfe-search-engine-scrapper
             dir: scrapper
     steps:
     - name: Checkout repository 📜
