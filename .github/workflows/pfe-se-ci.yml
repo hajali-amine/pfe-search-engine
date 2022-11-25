@@ -17,40 +17,45 @@ jobs:
         include:
           - name: front
             dockerfile: ./front/Dockerfile
-            tag: ghcr.io/hajali-amine/pfe-search-engine-front
+            ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-front
+            dh-tag: aminehajali/pfe-search-engine-front
             dir: front
           - name: dataloader
             dockerfile: ./back/Dockerfile.dataloader
-            tag: ghcr.io/hajali-amine/pfe-search-engine-dataloader
+            ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-dataloader
+            dh-tag: aminehajali/pfe-search-engine-dataloader
             dir: back
           - name: datareader
             dockerfile: ./back/Dockerfile.datareader
-            tag: ghcr.io/hajali-amine/pfe-search-engine-datareader
+            ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-datareader
+            dh-tag: aminehajali/pfe-search-engine-datareader
             dir: back
           - name: scrapper
             dockerfile: ./scrapper/Dockerfile
-            tag: ghcr.io/hajali-amine/pfe-search-engine-scrapper
+            ghcr-tag: ghcr.io/hajali-amine/pfe-search-engine-scrapper
+            dh-tag: aminehajali/pfe-search-engine-scrapper
             dir: scrapper
     steps:
     - name: Checkout repository 📜
       uses: actions/checkout@v2
-    - name: Log in to the Container registry ⚓
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Log in to GitHub Container registry ⚓
       uses: docker/login-action@v2.1.0
       with:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GH_TOKEN }}
-    # TODO: find better way to cache, this probably doesn't work
+    # TODO: find a way to cache layers
     - name: Build and publish a Docker image for ${{ matrix.name }} 🐋
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./${{ matrix.dir }}
         file: ${{ matrix.dockerfile }}
         push: true
-        tags: ${{ matrix.tag }}
-        cache-from: type=local,src=/tmp/.buildx-cache-${{ matrix.name }}
-        cache-to: type=local,dest=/tmp/.buildx-cache-${{ matrix.name }}-new
-    - name: Move cache 💾
-      run: |
-        rm -rf /tmp/.buildx-cache-${{ matrix.name }}
-        mv /tmp/.buildx-cache-${{ matrix.name }}-new /tmp/.buildx-cache-${{ matrix.name }}
+        tags: |
+          ${{ matrix.ghcr-tag }}
+          ${{ matrix.dh-tag }}
