@@ -42,7 +42,7 @@ jobs:
         password: ${{ secrets.GH_TOKEN }}
     # TODO: find better way to cache, this probably doesn't work
     - name: Build and publish a Docker image for ${{ matrix.name }} 🐋
-      uses: docker/build-push-action@v3.2.0
+      uses: docker/build-push-action@v2
       with:
         context: ./${{ matrix.dir }}
         file: ${{ matrix.dockerfile }}
