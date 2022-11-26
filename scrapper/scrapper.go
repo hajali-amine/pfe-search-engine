@@ -22,6 +22,6 @@ func main() {
 	conn, channel := loader.GetChannel()
 	defer conn.Close()
 	defer channel.Close()
-	
+
 	scripts.ScrapOffers(driver, channel)
 }

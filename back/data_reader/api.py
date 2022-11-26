@@ -4,6 +4,7 @@ from data_reader.data_reader import DataReader
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
 from graph_driver.neo4j_oop import Neo4jOOP
+from data_reader.logger import logging
 
 app = Flask(__name__)
 CORS(app)
@@ -18,6 +19,7 @@ neo = Neo4jOOP(
 
 @app.route("/api/<filter>/<search>", methods=["GET"])
 @cross_origin()
+@logging(function_name="data_reader.api.data")
 def data(filter, search):
     result = (
         DataReader.search_by_filter(neo=neo, filter=filter, search=search)
