@@ -20,7 +20,7 @@ neo = Neo4jOOP(
 
 @app.route("/api/<filter>/<search>", methods=["GET"])
 @cross_origin()
-@logging(function_name="data_reader.api.data", return_meth=len)
+@logging(function_name="data_reader.api.data")
 def data(filter, search):
     result = (
         DataReader.search_by_filter(neo=neo, filter=filter, search=search)
