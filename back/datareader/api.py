@@ -1,7 +1,7 @@
 import os
 
-from data_reader.data_reader import DataReader
-from data_reader.logger import logging
+from datareader.data_reader import DataReader
+from datareader.logger import logging
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
 
