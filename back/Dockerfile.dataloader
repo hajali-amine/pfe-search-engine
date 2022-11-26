@@ -10,7 +10,7 @@ COPY graph_driver graph_driver
 
 COPY graph_query_builder graph_query_builder
 
-COPY data_loader loader
+COPY data_loader data_loader
 
 ENV PYTHONPATH=/app
 
@@ -30,4 +30,4 @@ RUN chmod +x /wait
 
 EXPOSE 5000
 
-CMD python3 loader/consumer.py
+CMD python3 data_loader/consumer.py

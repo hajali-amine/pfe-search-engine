@@ -35,6 +35,7 @@ Thus, the database looks like the following;
 - [x] Add scripts for the Makefile.
 - [x] Send messages in queue in Protocol Buffers - Google's data interchange format.
 - [x] Add a prelimenary GitHub actions pipeline to push new docker images on every push.
+  - [ ] Find a way to cache Docker layers.
 - [ ] Add a pre-commit hook.
 - [ ] Add logging in different components.
 - [ ] Add application metrics using Prometheus API.

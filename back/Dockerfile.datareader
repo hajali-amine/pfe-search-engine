@@ -10,9 +10,9 @@ COPY graph_driver graph_driver
 
 COPY graph_query_builder graph_query_builder
 
-COPY data_reader api
+COPY data_reader data_reader
 
-ENV FLASK_APP=api.api
+ENV FLASK_APP=data_reader.api
 
 ENV NEO4J_USERNAME=neo4j
 

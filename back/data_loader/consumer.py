@@ -1,10 +1,10 @@
 import os
 
-import loader.types.job_pb2 as Job
+import data_loader.types.job_pb2 as Job
 import pika
 from google.protobuf.json_format import MessageToDict
 from graph_driver.neo4j_oop import Neo4jOOP
-from loader.data_loader import DataLoader
+from data_loader.data_loader import DataLoader
 
 neo = Neo4jOOP(
     os.environ["NEO4J_URL"],
