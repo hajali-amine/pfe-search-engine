@@ -1,10 +1,11 @@
 import os
 
 from data_reader.data_reader import DataReader
+from data_reader.logger import logging
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
+
 from graph_driver.neo4j_oop import Neo4jOOP
-from data_reader.logger import logging
 
 app = Flask(__name__)
 CORS(app)
