@@ -1,5 +1,5 @@
 from functools import wraps
-from logger import Logger
+from logging import Logger
 
 def logging(function_name):
     def log_decorator(function_to_log):
