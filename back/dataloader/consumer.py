@@ -1,11 +1,10 @@
 import os
 
 import pika
-from google.protobuf.json_format import MessageToDict
-
 from dataloader.data_loader import DataLoader
 from dataloader.logger import logger
 from dataloader.types.job_pb2 import Job
+from google.protobuf.json_format import MessageToDict
 from graph_driver.neo4j_oop import Neo4jOOP
 
 try:

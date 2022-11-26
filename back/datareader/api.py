@@ -4,7 +4,6 @@ from datareader.data_reader import DataReader
 from datareader.logger import logging
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
-
 from graph_driver.neo4j_oop import Neo4jOOP
 
 app = Flask(__name__)

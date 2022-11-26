@@ -53,7 +53,6 @@ class DataReader:
             "{internship: i.name, description:i.description, link:i.link, location: l.name, company: c.name, logo: c.logo, skills: COLLECT(s_prime.name)}"
         )
         main_result = neo.execute_query(query_builder.build())
-        print(main_result)
 
         query_builder.match().node("t", "Theme").relation(
             "fits", "FITS", Direction.NONE
@@ -91,7 +90,6 @@ class DataReader:
             "{internship: i.name, description:i.description, link:i.link, location: l.name, company: c.name, logo: c.logo, skills: COLLECT(s_prime.name)}"
         )
         related_results = neo.execute_query(query_builder.build())
-        print(related_results)
 
         difference = []
         for internship in related_results:
@@ -99,6 +97,5 @@ class DataReader:
                 difference.append(internship)
 
         main_result.extend(difference)
-        print(main_result)
 
         return main_result

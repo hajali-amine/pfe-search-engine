@@ -13,7 +13,10 @@ def logging(function_name, return_meth=None):
             try:
                 value = function_to_log(*args, **kwargs)
                 logger.info(
-                    f"{function_name} returned", args=args, kwargs=kwargs, result=return_meth(value) if return_meth else value
+                    f"{function_name} returned",
+                    args=args,
+                    kwargs=kwargs,
+                    result=return_meth(value) if return_meth else value,
                 )
             except Exception as e:
                 logger.error(
