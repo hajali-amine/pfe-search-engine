@@ -10,21 +10,18 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-func GetChannel() (*amqp.Connection, *amqp.Channel) {
+func GetChannel() (*amqp.Connection, *amqp.Channel, error) {
 	conn, err := amqp.Dial(os.Getenv("RABBITMQ_URL"))
 	if err != nil {
-		panic(err)
+		return nil, nil, err
 	}
 
 	ch, err := conn.Channel()
-	if err != nil {
-		panic(err)
-	}
 
-	return conn, ch
+	return conn, ch, err
 }
 
-func PublishMsg(ch *amqp.Channel, msg protoreflect.ProtoMessage) {
+func PublishMsg(ch *amqp.Channel, msg protoreflect.ProtoMessage) error {
 	q, err := ch.QueueDeclare(
 		"loader", // name
 		false,    // durable
@@ -34,12 +31,12 @@ func PublishMsg(ch *amqp.Channel, msg protoreflect.ProtoMessage) {
 		nil,      // arguments
 	)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	serializedMsg, err := proto.Marshal(msg)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -55,7 +52,6 @@ func PublishMsg(ch *amqp.Channel, msg protoreflect.ProtoMessage) {
 			Body:        []byte(serializedMsg),
 		},
 	)
-	if err != nil {
-		panic(err)
-	}
+
+	return err
 }

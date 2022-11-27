@@ -1,7 +1,6 @@
 package scripts
 
 import (
-	"fmt"
 	"os"
 	"regexp"
 	"searchengine/scrapper/constants"
@@ -12,6 +11,7 @@ import (
 
 	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/tebeka/selenium"
+	"go.uber.org/zap"
 )
 
 const (
@@ -100,16 +100,19 @@ func getSkills(driver selenium.WebDriver, offer selenium.WebElement) []*types.Jo
 	return skills
 }
 
-func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel) {
-	driver.Get(INTERNSHIPS_WEBSITE_URL)
+func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel, logger *zap.SugaredLogger) {
+	err := driver.Get(INTERNSHIPS_WEBSITE_URL)
+	if err != nil {
+		logger.Error("Couldn't get website to scrap", "error", err)
+	}
 
-	fmt.Println("Scrapping in progress...")
+	logger.Info("Scrapping in progress...")
 	nbPages, _ := strconv.Atoi(os.Getenv("NB_PAGES_TO_SCRAP"))
 
 	for i := 0; i < nbPages; i++ {
 		jobOffers, err := driver.FindElements(selenium.ByClassName, OFFERS_CLASSNAME)
 		if err != nil {
-			panic(err)
+			logger.Error("Couldn't get offer", "error", err)
 		}
 
 		for _, jobOffer := range jobOffers {
@@ -122,13 +125,18 @@ func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel) {
 				Link:        getLink(jobOffer),
 				Skills:      getSkills(driver, jobOffer),
 			}
-			loader.PublishMsg(channel, &job)
+			logger.Info("Scrapped a new offer", "offer", job)
+			err := loader.PublishMsg(channel, &job)
+			if err != nil {
+				logger.Error("Message failed to publish", "error", err)
+			}
 		}
 		next, err := driver.FindElement(selenium.ByClassName, NEXT_PAGE_CLASSNAME)
 		if err != nil {
-			break
+			logger.Error("Couldn't change page", "error", err)
 		}
 		next.Click()
 		time.Sleep(time.Second)
+		logger.Info("Next page", "pageNumber", i+1)
 	}
 }
