@@ -13,26 +13,26 @@ func main() {
 
 	service, err := webDriver.GetChromeService()
 	if err != nil {
-		logger.Error("Failed to run Chrome", "error", err)
+		logger.Errorw("Failed to run Chrome", "error", err)
 		os.Exit(1)
 	}
-	logger.Info("Run Chrome service successfully")
+	logger.Infow("Run Chrome service successfully")
 	defer service.Stop()
 
 	driver, err := webDriver.GetChromeDriver()
 	if err != nil {
-		logger.Error("Failed to acquire Selenium Driver", "error", err)
+		logger.Errorw("Failed to acquire Selenium Driver", "error", err)
 		os.Exit(1)
 	}
-	logger.Info("Instantiated Selenium's WebDriver")
+	logger.Infow("Instantiated Selenium's WebDriver")
 	defer driver.Close()
 
 	conn, channel, err := loader.GetChannel()
 	if err != nil {
-		logger.Error("Failed to connect to RabbitMQ", "error", err)
+		logger.Errorw("Failed to connect to RabbitMQ", "error", err)
 		os.Exit(1)
 	}
-	logger.Info("Connected to RabbitMQ")
+	logger.Infow("Connected to RabbitMQ")
 	defer conn.Close()
 	defer channel.Close()
 

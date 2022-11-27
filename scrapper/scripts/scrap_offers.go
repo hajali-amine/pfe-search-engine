@@ -103,16 +103,16 @@ func getSkills(driver selenium.WebDriver, offer selenium.WebElement) []*types.Jo
 func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel, logger *zap.SugaredLogger) {
 	err := driver.Get(INTERNSHIPS_WEBSITE_URL)
 	if err != nil {
-		logger.Error("Couldn't get website to scrap", "error", err)
+		logger.Errorw("Couldn't get website to scrap", "error", err)
 	}
 
-	logger.Info("Scrapping in progress...")
+	logger.Infow("Scrapping in progress...")
 	nbPages, _ := strconv.Atoi(os.Getenv("NB_PAGES_TO_SCRAP"))
 
 	for i := 0; i < nbPages; i++ {
 		jobOffers, err := driver.FindElements(selenium.ByClassName, OFFERS_CLASSNAME)
 		if err != nil {
-			logger.Error("Couldn't get offer", "error", err)
+			logger.Errorw("Couldn't get offer", "error", err)
 		}
 
 		for _, jobOffer := range jobOffers {
@@ -125,18 +125,18 @@ func ScrapOffers(driver selenium.WebDriver, channel *amqp.Channel, logger *zap.S
 				Link:        getLink(jobOffer),
 				Skills:      getSkills(driver, jobOffer),
 			}
-			logger.Info("Scrapped a new offer", "offer", job)
+			logger.Infow("Scrapped a new offer", "offer", job)
 			err := loader.PublishMsg(channel, &job)
 			if err != nil {
-				logger.Error("Message failed to publish", "error", err)
+				logger.Errorw("Message failed to publish", "error", err)
 			}
 		}
 		next, err := driver.FindElement(selenium.ByClassName, NEXT_PAGE_CLASSNAME)
 		if err != nil {
-			logger.Error("Couldn't change page", "error", err)
+			logger.Errorw("Couldn't change page", "error", err)
 		}
 		next.Click()
 		time.Sleep(time.Second)
-		logger.Info("Next page", "pageNumber", i+1)
+		logger.Infow("Next page", "pageNumber", i+1)
 	}
 }
