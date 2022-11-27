@@ -37,7 +37,7 @@ Thus, the database looks like the following;
 - [x] Add a prelimenary GitHub actions pipeline to push new docker images on every push.
   - [ ] Find a way to cache Docker layers.
 - [ ] Add a pre-commit hook.
-- [ ] Add logging in different components.
+- [x] Add logging in different components.
 - [ ] Add application metrics using Prometheus API.
 - [ ] Use K8S for deployment.
 - [ ] Use Helm or Kustomize to package the different entities.
