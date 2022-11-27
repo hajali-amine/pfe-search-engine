@@ -18,7 +18,7 @@ Example:
 }
 
 function push_image (){
-    docker push ghcr.io/hajali-amine/pfe-search-engine-$1
+    docker push aminehajali/pfe-search-engine-$1
 }
 
 function push_all {

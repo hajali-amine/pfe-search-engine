@@ -19,10 +19,10 @@ Example:
 
 function build_image (){
     if [ -z "$3" ] ; then
-        docker build -t ghcr.io/hajali-amine/pfe-search-engine-$1 ./$2
+        docker build -t aminehajali/pfe-search-engine-$1 ./$2
         return 0
     fi
-    docker build -f ./$2/Dockerfile.$3 -t ghcr.io/hajali-amine/pfe-search-engine-$1 ./$2
+    docker build -f ./$2/Dockerfile.$3 -t aminehajali/pfe-search-engine-$1 ./$2
 }
 
 function build_dataloader {

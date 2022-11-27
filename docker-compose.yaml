@@ -1,7 +1,7 @@
 version: '3'
 services:
   frontend:
-    image: ghcr.io/hajali-amine/pfe-search-engine-front
+    image: aminehajali/pfe-search-engine-front
     container_name: front
     ports:
       - 80:80
@@ -9,7 +9,7 @@ services:
       - REACT_APP_BACKEND_URL=http://localhost:5000
 
   datareader:
-    image: ghcr.io/hajali-amine/pfe-search-engine-datareader
+    image: aminehajali/pfe-search-engine-datareader
     container_name: datareader
     ports:
       - 5000:5000
@@ -19,7 +19,7 @@ services:
       - NEO4J_PASSWORD=pwd  
 
   dataloader:
-    image: ghcr.io/hajali-amine/pfe-search-engine-dataloader
+    image: aminehajali/pfe-search-engine-dataloader
     container_name: dataloader
     ports:
       - 5001:5000
@@ -32,7 +32,7 @@ services:
       - WAIT_HOSTS=rabbitmq:5672
 
   scrapper:
-    image: ghcr.io/hajali-amine/pfe-search-engine-scrapper
+    image: aminehajali/pfe-search-engine-scrapper
     container_name: scrapper
     command: sh -c "/wait && go run scrapper.go"
     environment:
