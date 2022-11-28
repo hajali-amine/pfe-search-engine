@@ -29,12 +29,12 @@ Thus, the database looks like the following;
 
 ## Next Steps
 
-- [x] Convert the scapping scripts to go and dockerize it.
+- [x] Convert the scrapping scripts to go and dockerize it.
 - [x] Use RabbitMQ between the scrapper and the loader.
-- [x] Seperate the backend to two different containers, one for the reader and one for the loader.
+- [x] Separate the backend to two different containers, one for the reader and one for the loader.
 - [x] Add scripts for the Makefile.
 - [x] Send messages in queue in Protocol Buffers - Google's data interchange format.
-- [x] Add a prelimenary GitHub actions pipeline to push new docker images on every push.
+- [x] Add a preliminary GitHub actions pipeline to push new docker images on every push.
   - [ ] Find a way to cache Docker layers.
 - [ ] Add a pre-commit hook.
 - [x] Add logging in different components.
