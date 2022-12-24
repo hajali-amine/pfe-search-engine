@@ -42,6 +42,8 @@ Thus, the database looks like the following;
 - [ ] Use K8S for deployment.
 - [ ] Use Helm or Kustomize to package the different entities.
 - [ ] Use ArgoCD for GitOps.
+- [ ] Add Linkerd and Flagger for Canary deployment strategy.
+- [ ] Use Pulumi to provision infrastructure and set-up the first Helm charts.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
 - [ ] Add retention policy for logs both for dev and prod.
 - [ ] Make an ingress with a domain name.
