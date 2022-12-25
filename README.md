@@ -46,6 +46,7 @@ Thus, the database looks like the following;
 - [ ] Use Pulumi to provision infrastructure and set-up the first Helm charts.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
 - [ ] Add retention policy for logs both for dev and prod.
+- [ ] Add an alerting system with Discord Webhooks.
 - [ ] Make an ingress with a domain name.
 - [ ] Improve the front's UI.
 - [ ] Add UTs.
