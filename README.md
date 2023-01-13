@@ -43,12 +43,12 @@ Thus, the database looks like the following;
 - [ ] Use Helm or Kustomize to package the different entities.
 - [ ] Use ArgoCD for GitOps.
 - [ ] Add Linkerd and Flagger for Canary deployment strategy.
-- [ ] Use Pulumi to provision infrastructure and set-up the first Helm charts.
+- [ ] Use Terraform to provision infrastructure and set-up the first Helm charts.
 - [ ] Add application metrics and visualize them using Prometheus and Grafana.
 - [ ] Add retention policy for logs both for dev and prod.
 - [ ] Add an alerting system with Discord Webhooks.
 - [ ] Make an ingress with a domain name.
 - [ ] Improve the front's UI.
 - [ ] Add UTs.
-- [ ] Add a CI/CD pipeline.
+- [ ] Add a CI pipeline.
 - [ ] Learn and apply security best practices.

@@ -17,7 +17,7 @@ push:
 	fi ; \
 
 docker-run:
-	@docker run ghcr.io/hajali-amine/pfe-search-engine-$i
+	@docker run aminehajali/pfe-search-engine-$i
 
 create-local-cluster:
 	@kind create cluster
