@@ -20,7 +20,7 @@ except Exception as e:
 
 try:
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(os.getenv("RABBITMQ_URL"))
+        pika.URLParameters(os.getenv("RABBITMQ_URL"))
     )
     channel = connection.channel()
     channel.queue_declare(queue="loader")
