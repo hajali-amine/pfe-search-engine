@@ -26,7 +26,7 @@ neo = Neo4jOOP(
 @logging(function_name="data_reader.api.data")
 def data(filter, search):
     with tracer.start_as_current_span("data_reader") as span:
-        span.set_attribute("request_id", uuid.uuid5())
+        span.set_attribute("request_id", uuid.uuid1())
         result = (
             DataReader.search_by_filter(neo=neo, filter=filter, search=search)
             if filter != "skill"
