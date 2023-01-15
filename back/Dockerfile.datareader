@@ -24,4 +24,4 @@ RUN opentelemetry-bootstrap --action=install
 
 EXPOSE 5000
 
-CMD OTEL_RESOURCE_ATTRIBUTES=service.name=datareader OTEL_EXPORTER_OTLP_ENDPOINT="http://${SIGNOZ_BACKEND}:4318"  opentelemetry-instrument --traces_exporter otlp_proto_http --metrics_exporter otlp_proto_http flask run --host=0.0.0.0
+CMD OTEL_RESOURCE_ATTRIBUTES=service.name=${SERVICE_NAME} OTEL_EXPORTER_OTLP_ENDPOINT="http://${SIGNOZ_BACKEND}:4318"  opentelemetry-instrument --traces_exporter otlp_proto_http --metrics_exporter otlp_proto_http flask run --host=0.0.0.0

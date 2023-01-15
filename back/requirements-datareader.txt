@@ -2,5 +2,8 @@ Flask==2.1.2
 flask-cors==3.0.10
 neo4j==4.4.2
 structlog==22.3.0
+prometheus-client==0.14.1
+prometheus-flask-exporter==0.20.3
+Werkzeug==2.2.2
 opentelemetry-distro
 opentelemetry-exporter-otlp

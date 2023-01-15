@@ -19,14 +19,14 @@ except Exception as e:
     raise
 
 try:
-    connection = pika.BlockingConnection(
-        pika.URLParameters(os.getenv("RABBITMQ_URL"))
-    )
+    connection = pika.BlockingConnection(pika.URLParameters(os.getenv("RABBITMQ_URL")))
     channel = connection.channel()
     channel.queue_declare(queue="loader")
     logger.info("Connected to RabbitMQ")
 except Exception as e:
-    logger.error("Failed to connect to RabbitMQ", url=os.getenv("RABBITMQ_URL"), error=str(e))
+    logger.error(
+        "Failed to connect to RabbitMQ", url=os.getenv("RABBITMQ_URL"), error=str(e)
+    )
     raise
 
 
