@@ -2,6 +2,9 @@
 
 A search engine for final year internships.
 
+> **note**
+> You can find the infrastructure repository [here](https://github.com/hajali-amine/pfe-se-infra).
+
 ## Components
 
 - __Frontend:__ Implemented with ReactJS. It consists of a search bar and a search filter. Once you execute the search, a list of the offers that correspond to your search will be returned. It queries the result from the Data Reader.
@@ -38,13 +41,13 @@ Thus, the database looks like the following;
   - [ ] Find a way to cache Docker layers.
 - [ ] Add a pre-commit hook.
 - [x] Add logging in different components.
-- [ ] Add application metrics using Prometheus API.
-- [ ] Use K8S for deployment.
-- [ ] Use Helm or Kustomize to package the different entities.
+- [x] Add application metrics using Prometheus API.
+- [x] Use K8S for deployment.
 - [ ] Use ArgoCD for GitOps.
 - [ ] Add Linkerd and Flagger for Canary deployment strategy.
-- [ ] Use Terraform to provision infrastructure and set-up the first Helm charts.
-- [ ] Add application metrics and visualize them using Prometheus and Grafana.
+- [x] Use Terraform to provision infrastructure and set-up the first Helm charts.
+- [x] Add application metrics and visualize them using Prometheus and Grafana.
+  - [ ] Grafana is crashing. Check why.
 - [ ] Add retention policy for logs both for dev and prod.
 - [ ] Add an alerting system with Discord Webhooks.
 - [ ] Make an ingress with a domain name.
