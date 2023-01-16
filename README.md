@@ -2,7 +2,7 @@
 
 A search engine for final year internships.
 
-> **note**
+> **Note**
 > You can find the infrastructure repository [here](https://github.com/hajali-amine/pfe-se-infra).
 
 ## Components
